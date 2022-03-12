@@ -10,7 +10,7 @@ import java.security.NoSuchAlgorithmException;
 import java.security.NoSuchProviderException;
 import java.security.Security;
 
-class AESEncryption {
+public class AESEncryption {
 
     byte[] keyBytes;
     Cipher cipher;

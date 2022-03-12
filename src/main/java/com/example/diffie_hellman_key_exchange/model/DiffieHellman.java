@@ -14,6 +14,9 @@ public class DiffieHellman {
     BigInteger LocalPrime;
     BigInteger LocalGenerator;
 
+    //Initializing a list for received Messages
+    public List<Object> messages = new ArrayList<>();
+
     //Creating the primes hashMap
     HashMap<Integer, PrimeGenerator> primes = new HashMap<Integer, PrimeGenerator>();
 
@@ -50,11 +53,19 @@ public class DiffieHellman {
         return Private_key;
     }
 
-    public BigInteger genPublic_key() {
+    public BigInteger getPublic_key() {
+        return Public_key;
+    }
+
+    public BigInteger getShared_key() {
+        return Shared_key;
+    }
+
+    public void genPublic_key() {
         //BigInteger test = new BigInteger(String.valueOf(this.LocalGenerator));
         BigInteger sol = this.LocalGenerator.modPow(this.Private_key, this.LocalPrime); //It generates a public key using g^private key mod prime
         this.Public_key = new BigInteger(sol.toString());
-        return new BigInteger(sol.toString()); //Have to firts cast it to String because prseInt does not support BigInteger
+        //return new BigInteger(sol.toString()); //Have to firts cast it to String because prseInt does not support BigInteger
     }
 
     public BigInteger genSharedKey(BigInteger otherKey)
