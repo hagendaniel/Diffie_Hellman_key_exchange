@@ -5,7 +5,7 @@ import java.nio.ByteBuffer;
 public class Binascii
 {
     private static final char charGlyph_[] = {'0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'a', 'b', 'c', 'd', 'e', 'f' };
-    public static String hexlify(byte[] bytes)
+    public static String hexlify(byte[] bytes) //Converts the input bytestream to a String (hexadecimal number)
     {
         StringBuilder hexAscii = new StringBuilder(bytes.length * 2);
 
