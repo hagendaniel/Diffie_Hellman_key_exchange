@@ -62,17 +62,14 @@ public class DiffieHellman {
     }
 
     public void genPublic_key() {
-        //BigInteger test = new BigInteger(String.valueOf(this.LocalGenerator));
         BigInteger sol = this.LocalGenerator.modPow(this.Private_key, this.LocalPrime); //It generates a public key using g^private key mod prime
-        this.Public_key = new BigInteger(sol.toString());
-        //return new BigInteger(sol.toString()); //Have to firts cast it to String because prseInt does not support BigInteger
+        this.Public_key = sol;
     }
 
-    public BigInteger genSharedKey(BigInteger otherKey)
+    public void genSharedKey(BigInteger otherKey)
     {
         BigInteger otherbigkey = new BigInteger(String.valueOf(otherKey));
         BigInteger sharedKey = otherbigkey.modPow(this.Private_key, this.LocalPrime); // It generates the shared key using the other's public key^private key mod prime
         this.Shared_key = new BigInteger(sharedKey.toString());
-        return this.Shared_key;
     }
 }

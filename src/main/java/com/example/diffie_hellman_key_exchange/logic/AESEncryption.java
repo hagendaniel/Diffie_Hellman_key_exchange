@@ -16,23 +16,22 @@ public class AESEncryption {
     Cipher cipher;
     SecretKeySpec key;
 
-    public AESEncryption(/*int key*/) {
+    public AESEncryption() { //This constructor initializes an AES encryptor, and I used BouncyCastleProvider for the cryptographic operations provider
 
         try {
             Security.addProvider(new org.bouncycastle.jce.provider.BouncyCastleProvider());
-            cipher = Cipher.getInstance("AES/ECB/PKCS5Padding", "BC"); //was no padding /NoPadding"
-            //this.key = new SecretKeySpec(key, "AES");
+            cipher = Cipher.getInstance("AES/ECB/PKCS5Padding", "BC"); //Cipher represents an encryption algorithm, and in the getInstance we define how to transform the text and what provider to use - PKCS5Padding is needed because otherwise it wouldn't work as the texts are not the same length
         } catch (NoSuchAlgorithmException | NoSuchProviderException | NoSuchPaddingException e) {
             System.out.println(e.getMessage());
         }
     }
 
-    public void createKey(byte[] keyBytes) {
+    public void createKey(byte[] keyBytes) { //Here we generate a SecretKeySpec key to crypt but based on the received bytearray made out of the shared key
         this.keyBytes = keyBytes;
         key = new SecretKeySpec(keyBytes, "AES");
     }
 
-    public byte[] encrypt(byte[] plainText) {
+    public byte[] encrypt(byte[] plainText) { //We define in the cipher that we want to Encrypt and we pass the SecretSpecKey (generated based on the shared key)
         try {
             cipher.init(Cipher.ENCRYPT_MODE, key);
             return cipher.doFinal(plainText);
@@ -42,7 +41,7 @@ public class AESEncryption {
         }
     }
 
-    public byte[] decrypt(byte[] codedText) {
+    public byte[] decrypt(byte[] codedText) { //We define in the cipher that we want to Decrypt and we pass the SecretSpecKey (generated based on the shared key)
         try {
             cipher.init(Cipher.DECRYPT_MODE, key);
             return cipher.doFinal(codedText);

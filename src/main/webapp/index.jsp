@@ -1,5 +1,6 @@
 <%@ page import="com.example.diffie_hellman_key_exchange.model.DiffieHellman" %>
-<%@ page import="com.example.diffie_hellman_key_exchange.model.DiffieHellmanRepo" %><%--
+<%@ page import="com.example.diffie_hellman_key_exchange.model.DiffieHellmanRepo" %>
+<%@ page import="java.util.List" %><%--
   Created by IntelliJ IDEA.
   User: Dani
   Date: 2022. 03. 09.
@@ -9,16 +10,30 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%DiffieHellman d_alice = (DiffieHellman) session.getAttribute("d_alice");%>
 <%DiffieHellman d_bob = (DiffieHellman) session.getAttribute("d_bob");%>
-<%String eavesdrop = (String)session.getAttribute("eavesdrop");//---------------------------------------------------------------------------------%>
+<%List<Object> eavesdrops = (List<Object>) session.getAttribute("eavesdrops");%>
 <html>
 <head>
     <title>Diffie-Hellman key exchange</title>
+    <style type="text/css">
+        html, body { margin: 0; padding: 0; }
+        html, body, #customtextarea textarea { width: 99%; resize: none}
+        html, body, #customtextarea1 textarea { width: 99%; resize: none}
+        html, body #hackertextarea textarea{
+            background: transparent;
+            color: #FFF;
+            resize: none;
+            border: 0 none;
+            width: 99%;
+            outline: none;
+            height: fit-content;
+        }
+    </style>
 </head>
-<body>
+<body background="hetter_only.png" style="color:#FFF">
     <h1 align="center">Diffie-Hellmann key exchange</h1>
     <table border="1" style="table-layout:fixed;" WIDTH="75%"  height="80%" align="center">
         <tr>
-            <th width="25%" style="overflow: scroll">
+            <th width="25%" style="overflow: auto">
                 <h2>Alice</h2>
                 <h3>Private key:</h3>
                 <b><%=d_alice.getPrivate_key().toString()%></b>
@@ -62,9 +77,20 @@
             </th>
             <th width="25%" rowspan="2" valign="top">
                 <h2>Hacker</h2>
-                <%=eavesdrop%>
+                <p>Eavesdrop:</p>
+                <div id="hackertextarea">
+                    <textarea rows="40">
+                        <%
+                            String eavesToPrint="";
+                            for (Object eavesdrop : eavesdrops) {
+                                eavesToPrint=eavesToPrint.concat(eavesdrop.toString()+"\n");
+                            }
+                        %>
+                        <%=eavesToPrint%>
+                    </textarea>
+                </div>
             </th>
-            <th width="25%"  style="overflow: scroll">
+            <th width="25%"  style="overflow: auto">
                 <h2>Bob</h2>
                 <h3>Private key:</h3>
                 <b><%=d_bob.getPrivate_key().toString()%></b>
@@ -110,13 +136,13 @@
         <tr>
             <td>
                 <h1>Chat</h1>
-                <div height="35%">
-                    <textarea rows="18" cols="60" readonly>
+                <div id="customtextarea">
+                    <textarea rows="18" cols="60" style="background-color:#c1d7d7;" readonly>
                         <%
-                            String toDisplay = "Messages\n";
+                            String toDisplay = "Messages\n"; //color was #660033 #33001a
                             for (Object message : d_alice.messages)
                             {
-                                toDisplay=toDisplay.concat(message.toString()+"\n");
+                                toDisplay=toDisplay.concat("Bob: "+message.toString()+"\n");
                             }
                         %>
                         <%=toDisplay%>
@@ -135,13 +161,13 @@
             </td>
             <td>
                 <h1>Chat</h1>
-                <div height="35%">
-                    <textarea rows="18" cols="60" readonly>
+                <div id="customtextarea1">
+                    <textarea rows="18" cols="60" style="background-color:#c1d7d7" readonly>
                         <%
-                            String toDisplay_bob = "Messages\n";
+                            String toDisplay_bob = "Messages\n"; //color was #00264d #001a33
                             for (Object message : d_bob.messages)
                             {
-                                toDisplay_bob=toDisplay_bob.concat(message.toString()+"\n");
+                                toDisplay_bob=toDisplay_bob.concat("Alice: "+message.toString()+"\n");
                             }
                         %>
                         <%=toDisplay_bob%>
