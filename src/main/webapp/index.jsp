@@ -54,7 +54,7 @@
                 <b></b>
                 <form action="/genPKey" method="get">
                     <input type="hidden" name="user" value="alice"/>
-                    <input type="submit" value="Generate <b>public key</b>"></input>
+                    <input type="submit" value="Generate public key"></input>
                 </form>
                 <h3>Shared key:</h3>
                 <%
@@ -111,7 +111,7 @@
                 <b></b>
                 <form action="/genPKey" method="get">
                     <input type="hidden" name="user" value="bob"/>
-                    <input type="submit" value="Generate <b>public key</b>"></input>
+                    <input type="submit" value="Generate public key"></input>
                 </form>
                 <h3>Shared key:</h3>
                 <%

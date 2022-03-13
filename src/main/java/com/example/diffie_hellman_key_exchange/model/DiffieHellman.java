@@ -41,7 +41,11 @@ public class DiffieHellman {
             this.LocalPrime = new BigInteger(primstr.substring(2),16);//It converts the really huge string into a BigInteger with 16-base
             this.LocalGenerator = new BigInteger(String.valueOf(primes.get(group).Generator));
         } else {
-            //throw new Exception("This group is not supported.");
+            try {
+                throw new Exception("This group is not supported.");
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
         }
 
         byte[] byteStream = new byte[32]; //Declaring a bytearray
@@ -68,8 +72,7 @@ public class DiffieHellman {
 
     public void genSharedKey(BigInteger otherKey)
     {
-        BigInteger otherbigkey = new BigInteger(String.valueOf(otherKey));
-        BigInteger sharedKey = otherbigkey.modPow(this.Private_key, this.LocalPrime); // It generates the shared key using the other's public key^private key mod prime
-        this.Shared_key = new BigInteger(sharedKey.toString());
+        BigInteger sharedKey = otherKey.modPow(this.Private_key, this.LocalPrime); // It generates the shared key using the other's public key^private key mod prime
+        this.Shared_key = sharedKey;
     }
 }
