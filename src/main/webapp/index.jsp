@@ -186,5 +186,9 @@
             </td>
         </tr>
     </table>
+    <footer style="text-align: center">
+    ©2022
+        <a style="color: #c1d7d7" href="https://github.com/hagendaniel">Daniel Hagen</a>
+    </footer>
 </body>
 </html>
